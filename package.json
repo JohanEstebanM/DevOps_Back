@@ -1,0 +1,28 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate:roles": "node src/migrations/01-create-initial-roles.js",
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.0",
+    "reflect-metadata": "^0.1.14",
+    "typeorm": "^0.3.24"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
