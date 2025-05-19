@@ -9,7 +9,7 @@ module.exports = new EntitySchema({
       type: "int",
       generated: true
     },
-    id_cc: {
+    cc: {
       type: "varchar",
       length: 20,
       unique: true

@@ -25,7 +25,7 @@ class AuthController {
   }
   async register(req, res) {
     try {
-      let { id_cc, name, email, password, phone, role_id, warehouse_id } = req.body;
+      let { cc, name, email, password, phone, role_id, warehouse_id } = req.body;
       
       const roleRepository = AppDataSource.getRepository("Role");
       const role = await roleRepository.findOneBy({ id: role_id });
@@ -50,7 +50,7 @@ class AuthController {
       }
 
       const newUser = userRepository.create({
-        id_cc,
+        cc,
         name,
         email,
         password: hashedPassword,
