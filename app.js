@@ -6,6 +6,8 @@ const AppDataSource = require('./src/config/data-source');
 const authRoutes = require('./src/routes/auth.routes');
 const categoryRoutes = require('./src/routes/category.routes');
 const warehouseRoutes = require('./src/routes/warehouse.routes');
+const productRoutes = require('./src/routes/product.routes'); 
+const productVariantRoutes = require('./src/routes/product-variant.routes');
 
 const app = express();
 
@@ -27,6 +29,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/warehouses', warehouseRoutes);
+app.use('/api/products', productRoutes); 
+app.use('/api/product-variants', productVariantRoutes);
 
 // Inicialización
 AppDataSource.initialize()

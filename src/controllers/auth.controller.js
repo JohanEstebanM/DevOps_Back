@@ -7,7 +7,7 @@ class AuthController {
     try {
       const { email, password } = req.body;
       const user = await userModel.findByEmail(email);
-      
+
       if (!user) {
         return res.status(401).json({ error: "Credenciales inválidas" });
       }
@@ -43,11 +43,11 @@ class AuthController {
 
       const userRepository = AppDataSource.getRepository("User");
       const hashedPassword = await bcrypt.hash(password, 10);
-      
-      if(!warehouse_id)
-      {
+
+      if (!warehouse_id) {
         warehouse_id = null;
       }
+      console.log("Datos recibidos para registro:", { cc, name, email, password, phone, role_id, warehouse_id });
 
       const newUser = userRepository.create({
         cc,
@@ -68,7 +68,7 @@ class AuthController {
         role_id: savedUser.role_id
       });
     } catch (error) {
-      if (error.code === '23505') { 
+      if (error.code === '23505') {
         res.status(400).json({ error: "El email o ID CC ya está registrado" });
       } else {
         console.error(error);
