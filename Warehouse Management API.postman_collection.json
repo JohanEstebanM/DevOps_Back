@@ -526,66 +526,6 @@
 					"response": []
 				},
 				{
-					"name": "Get Variant with Stock",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/product-variants/:id/stock",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"product-variants",
-								":id",
-								"stock"
-							],
-							"variable": [
-								{
-									"key": "id"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Variants by Warehouse",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/product-variants/warehouses/:warehouse_id",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"product-variants",
-								"warehouses",
-								":warehouse_id"
-							],
-							"variable": [
-								{
-									"key": "warehouse_id"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get All Product-variant",
 					"request": {
 						"method": "GET",
