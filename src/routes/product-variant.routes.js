@@ -8,5 +8,7 @@ router.get('/:id', productVariantController.getById);
 router.get('/product/:product_id', productVariantController.getByProductId);
 router.put('/:id', productVariantController.update);
 router.delete('/:id', productVariantController.delete);
+router.get('/:id/stock', productVariantController.getByIdWithStock);
+router.get('/warehouses/:warehouse_id', productVariantController.getByWarehouse);
 
 module.exports = router;

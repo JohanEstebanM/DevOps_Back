@@ -1,0 +1,889 @@
+{
+	"info": {
+		"_postman_id": "938bcdd4-216e-4c63-8954-38919cb0e810",
+		"name": "Warehouse Management API",
+		"description": "Colección completa para API de gestión de bodegas y categorías",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29370226",
+		"_collection_link": "https://jdm222.postman.co/workspace/JDM~d81a1810-d371-4198-a7be-fe8f7a352102/collection/29370226-938bcdd4-216e-4c63-8954-38919cb0e810?action=share&source=collection_link&creator=29370226"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const data2 = pm.response.json();\r",
+									"pm.collectionVariables.set(\"auth_token\", data2.token);\r",
+									"console.log(\"Token guardado en variable de colección:\", data2.token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"securePassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cc\": \"123456789\",\r\n  \"name\": \"Admin User\",\r\n  \"email\": \"admin@example.com\",\r\n  \"password\": \"securePassword123\",\r\n  \"phone\": \"+1234567890\",\r\n  \"role_id\": 1,  \r\n  \"warehouse_id\": 2 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ropa\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Electrónica edit\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/categories/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/categories/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/categories/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Warehouses",
+			"item": [
+				{
+					"name": "Create Warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Bodega 2\",\n    \"phone\": \"+123456789\",\n    \"email\": \"bodegaw@example.com\",\n    \"location\": \"Calle 123\",\n    \"max_capacity\": 1000,\n    \"open_hours\": \"8:00 AM - 6:00 PM\",\n    \"coordinates\": [6.251151, -75.572925]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/warehouses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"warehouses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Warehouses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/warehouses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"warehouses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Warehouse by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/warehouses/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"warehouses",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Bodega Principal Actualizada\",\n    \"open_hours\": \"7:00 AM - 5:00 PM\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/warehouses/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"warehouses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Warehouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/warehouses/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"warehouses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Laptop HP EliteBook\",\r\n    \"description\": \"Laptop empresarial con procesador i7 y 16GB RAM\",\r\n    \"category_id\": 1,\r\n    \"image_url\": \"https://ejemplo.com/imagenes/laptop-hp.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Product",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Laptop HP EliteBook Pro\",\r\n    \"description\": \"Laptop empresarial con procesador i7, 16GB RAM y SSD 512GB\",\r\n    \"category_id\": 1,\r\n    \"image_url\": \"https://ejemplo.com/imagenes/laptop-hp-pro.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/products/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/products/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ProductVariant",
+			"item": [
+				{
+					"name": "Create Product-variant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 1,\r\n    \"variant_code\": \"LP-HP-ELITE-RED\",\r\n    \"attributes\": {\r\n        \"color\": \"red\",\r\n        \"size\": \"15.6\",\r\n        \"storage\": \"512GB SSD\"\r\n    },\r\n    \"price\": 1299.99\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/product-variants",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"product-variants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Variant with Stock",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/product-variants/:id/stock",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"product-variants",
+								":id",
+								"stock"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Variants by Warehouse",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/product-variants/warehouses/:warehouse_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"product-variants",
+								"warehouses",
+								":warehouse_id"
+							],
+							"variable": [
+								{
+									"key": "warehouse_id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Product-variant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/product-variants",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"product-variants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product-variant by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/product-variants/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"product-variants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product-variant by ID product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/product-variants/product/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"product-variants",
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product-variant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 1,\r\n    \"variant_code\": \"LP-HP-ELITE-BLUE\",\r\n    \"attributes\": {\r\n        \"color\": \"blue\",\r\n        \"size\": \"15.6\",\r\n        \"storage\": \"1TB SSD\"\r\n    },\r\n    \"price\": 1399.99\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/product-variants/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"product-variants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product-variant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/product-variants/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"product-variants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "Stock",
+					"item": [
+						{
+							"name": "Get Stock by Variant",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/inventory/variants/1/stock",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"inventory",
+										"variants",
+										"1",
+										"stock"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Stock by Warehouse",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/inventory/warehouses/2/stock",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"inventory",
+										"warehouses",
+										"2",
+										"stock"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Transfer Stock",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"variant_id\": 1,\n  \"from_warehouse_id\": 2,\n  \"to_warehouse_id\": 3,\n  \"quantity\": 5,\n  \"user_id\": 1,\n  \"notes\": \"Transferencia para surtir pedido #12345\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/inventory/stock/transfer",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"inventory",
+										"stock",
+										"transfer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add stock",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"variant_id\": 1,\r\n    \"warehouse_id\": 4,\r\n    \"quantity\": 30\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/stock/add",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"stock",
+										"add"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Movements",
+					"item": [
+						{
+							"name": "Get Movements by Variant",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/inventory/variants/1/movements",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"inventory",
+										"variants",
+										"1",
+										"movements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Movements by Warehouse",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/inventory/warehouses/4/movements",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"inventory",
+										"warehouses",
+										"4",
+										"movements"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "auth_token",
+			"value": ""
+		}
+	]
+}

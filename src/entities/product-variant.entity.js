@@ -40,6 +40,16 @@ module.exports = new EntitySchema({
         referencedColumnName: "id"
       },
       inverseSide: "variants"
+    },
+    stocks: {
+      type: "one-to-many",
+      target: "Stock",
+      inverseSide: "product_variant"
+    },
+    movements: {
+      type: "one-to-many",
+      target: "Movement",
+      inverseSide: "product_variant"
     }
   }
 });
