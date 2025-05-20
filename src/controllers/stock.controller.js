@@ -11,10 +11,35 @@ class StockController {
       const stockRepository = AppDataSource.getRepository(Stock);
       const stock = await stockRepository.find({
         where: { product_variant_id: variantId },
-        relations: ['warehouse']
+        relations: [
+          'warehouse',
+          'product_variant', 
+          'product_variant.product',
+          'product_variant.product.category'
+        ]
       });
 
-      res.json(stock);
+      // Formatear la respuesta para incluir toda la información necesaria
+      const formattedStock = stock.map(item => ({
+        id: item.id,
+        quantity: item.quantity,
+        warehouse: item.warehouse,
+        product_variant: {
+          id: item.product_variant.id,
+          variant_code: item.product_variant.variant_code,
+          attributes: item.product_variant.attributes,
+          price: item.product_variant.price,
+          product: {
+            id: item.product_variant.product.id,
+            name: item.product_variant.product.name,
+            description: item.product_variant.product.description,
+            image_url: item.product_variant.product.image_url,
+            category: item.product_variant.product.category
+          }
+        }
+      }));
+
+      res.json(formattedStock);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Error fetching stock for variant" });
@@ -29,10 +54,33 @@ class StockController {
       const stockRepository = AppDataSource.getRepository(Stock);
       const stock = await stockRepository.find({
         where: { warehouse_id: warehouseId },
-        relations: ['product_variant']
+        relations: [
+          'product_variant',
+          'product_variant.product',
+          'product_variant.product.category'
+        ]
       });
 
-      res.json(stock);
+      // Formatear la respuesta para incluir toda la información necesaria
+      const formattedStock = stock.map(item => ({
+        id: item.id,
+        quantity: item.quantity,
+        product_variant: {
+          id: item.product_variant.id,
+          variant_code: item.product_variant.variant_code,
+          attributes: item.product_variant.attributes,
+          price: item.product_variant.price,
+          product: {
+            id: item.product_variant.product.id,
+            name: item.product_variant.product.name,
+            description: item.product_variant.product.description,
+            image_url: item.product_variant.product.image_url,
+            category: item.product_variant.product.category
+          }
+        }
+      }));
+
+      res.json(formattedStock);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Error fetching stock for warehouse" });
