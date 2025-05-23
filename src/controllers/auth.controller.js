@@ -4,25 +4,43 @@ const bcrypt = require('bcrypt');
 
 class AuthController {
   async login(req, res) {
-    try {
-      const { email, password } = req.body;
-      const user = await userModel.findByEmail(email);
+  try {
+    const { email, password } = req.body;
+    const user = await userModel.findByEmail(email);
 
-      if (!user) {
-        return res.status(401).json({ error: "Credenciales inválidas" });
-      }
-
-      const isValid = await userModel.comparePassword(password, user.password);
-      if (!isValid) {
-        return res.status(401).json({ error: "Credenciales inválidas" });
-      }
-
-      const token = userModel.generateToken(user);
-      res.json({ token });
-    } catch (error) {
-      res.status(500).json({ error: "Error en el servidor" });
+    if (!user) {
+      return res.status(401).json({ error: "Credenciales inválidas" });
     }
+
+    const isValid = await userModel.comparePassword(password, user.password);
+    if (!isValid) {
+      return res.status(401).json({ error: "Credenciales inválidas" });
+    }
+
+    const token = userModel.generateToken(user);
+    
+    // Crear objeto con la información del usuario que quieres devolver
+    const userData = {
+      id: user.id,
+      cc: user.cc,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role_id: user.role_id,
+      warehouse_id: user.warehouse_id,
+      status: user.status
+      // Puedes incluir o excluir campos según lo necesites
+    };
+
+    // Devolver tanto el token como la información del usuario
+    res.json({ 
+      token,
+      user: userData
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Error en el servidor" });
   }
+}
   async register(req, res) {
     try {
       let { cc, name, email, password, phone, role_id, warehouse_id } = req.body;
