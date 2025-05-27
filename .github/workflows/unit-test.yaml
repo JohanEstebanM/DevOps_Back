@@ -41,8 +41,8 @@ jobs:
 
       - name:  env file
         run: |
-          echo "DATABASE_URL=postgresql://test:test@localhost:5432/test" > .env
-          echo "NODE_ENV=local" > .env
+           echo "DATABASE_URL=postgresql://test:test@localhost:5432/test" > .env
+           echo "NODE_ENV=test" >> 
           
       - name: Wait for DB
         run: |
