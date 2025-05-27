@@ -28,10 +28,10 @@ jobs:
           --health-retries 5
 
     steps:
-      - name: Checkout code
+      - name: Initializate
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Mount Node JS
         uses: actions/setup-node@v3
         with:
           node-version: 20
@@ -39,12 +39,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate .env file
+      - name:  env file
         run: |
-          echo 'DATABASE_URL='postgresql://test:test@localhost:5432/test' > .env
-          echo 'NODE_ENV=local' > .env
+          echo "DATABASE_URL=postgresql://test:test@localhost:5432/test" > .env
+          echo "NODE_ENV=local" > .env
           
-      - name: Wait for PostgreSQL
+      - name: Wait for DB
         run: |
           for i in {1..30}; do
             nc -z localhost 5432 && echo "Postgres is ready" && exit 0
