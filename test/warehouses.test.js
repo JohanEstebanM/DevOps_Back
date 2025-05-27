@@ -24,7 +24,7 @@ describe('POST /api/warehouses', () => {
       name: 'Test User',
       email: 'test' + randomCC + '@test.com',
       password: hashedPassword,
-      role_id: 3
+      role_id: 1
     });
 
     const savedUser = await userRepository.save(user);
