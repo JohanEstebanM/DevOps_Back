@@ -1,18 +1,21 @@
 require('dotenv').config();
+const path = require('path');
+
 const { DataSource } = require('typeorm');
+
+const ssl = process.env.DATABASE_SSL === 'true' || 
+            process.env.DATABASE_SSL === '1' ||
+            process.env.DATABASE_URL?.includes('sslmode=require');
+
 const AppDataSource = new DataSource({
   type: "postgres",
   url: process.env.DATABASE_URL,
-  synchronize: false,
-  logging: true,
-  entities: [__dirname + "/../entities/*.js"],
-  ssl: true,
-  extra: {
-    ssl: {
-      rejectUnauthorized: false
-    }
-  }
+  synchronize: process.env.NODE_ENV !== 'production',
+  logging: process.env.NODE_ENV !== 'production', 
+  entities: [path.join(__dirname, "../entities/*.js")],
+  ssl: ssl ? { rejectUnauthorized: false } : false,
 });
+
 
 async function createInitialRoles() {
   await AppDataSource.initialize();
